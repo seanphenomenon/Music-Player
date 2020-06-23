@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;1,300&display=swap");
+
+/* css created first */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: linear-gradient(
+    0deg,
+    rgba(247, 247, 247, 1) 23.8%,
+    rgba(252, 221, 221, 1) 92%
+  );
+  height: 100vh;
+  /* display */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lato", sans-serif;
+}
+
+.music-container {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 20px 20px 0 rgba(252, 169, 169, 0.6);
+  display: flex;
+  /* padding first value is top and bottom, and second value is left/right */
+  padding: 20px 30px;
+  position: relative;
+  /* margin targets top and bottom. */
+  margin: 100px 0;
+  z-index: 10;
+}
+
+.img-container {
+  position: relative;
+  width: 110px;
+}
+.img-container::after {
+  /* adds the middle ghost circle inside image to imitate a record. When using after or before, there is a content property. Content properly will not hold anything.*/
+  content: "";
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  height: 20px;
+  width: 20px;
+  /* transform takes in x and y value as percent to center it. */
+  transform: translate(-50%, 50%);
+}
+
+.img-container img {
+  border-radius: 50%;
+  object-fit: cover;
+  height: 110px;
+  /* width is inherited from container */
+  width: inherit;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  /* animation (type, seconds, length) */
+  animation: rotate 3s linear infinite;
+  /* paused by default */
+  animation-play-state: paused;
+}
+
+.music-container.play .img-container img {
+  /*  This is created to show how it will simulate on play. */
+  animation-play-state: running;
+}
+
+/* key frames creates the animation motion. From 0 to 360 (full rotation) when called */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.action-btn {
+  background-color: #fff;
+  border: 0;
+  color: rgb(216, 215, 215);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px;
+  /* margin left and right */
+  margin: 0 20px;
+}
+
+.action-btn.action-btn-big {
+  font-size: 35px;
+  color: rgb(189, 184, 184);
+}
+
+.action-btn:focus {
+  /* removes outline when clicked */
+  outline: 0px;
+}
+
+.music-info {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px 15px 0 0;
+  position: absolute;
+  top: 0;
+  left: 20px;
+  /* calc function takes 40px off the sides of the pop-up */
+  width: calc(100% - 40px);
+  /* padding is added all around except the last pushes it past image and to the center. */
+  padding: 10px 10px 10px 150px;
+  opacity: 0;
+  /* translate/transform will make it pop-up from behind play button */
+  transform: translateY(0%);
+  /* smooth transition (property, seconds, type). transition will be applied to opacity level as well.*/
+  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+  /* z-index is to keep it behind until music plays. */
+  z-index: 0;
+}
+.music-info h4 {
+  /* h4 usually already has margin on it. This will make pop-up a bit thinner on top. */
+  margin: 0;
+}
+
+.music-container.play .music-info {
+  /* this is for when play button is clicked. Negative transform on y-axis directs it up. */
+  opacity: 1;
+  transform: translateY(-100%);
+}
+
+.progress-container {
+  /* this is for the song bar */
+  background: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  /* margin for top and bottom */
+  margin: 10px 0;
+  height: 4px;
+  width: 100%;
+}
+
+.progress {
+  background-color: #fe8daa;
+  border-radius: 5px;
+  /* height is 100% of it's container */
+  height: 100%;
+  /* the width  of progress bar will be controlled by javascript. when altered, you can change the length of color. */
+  width: 0%;
+  transition: width 0.1s linear;
+}
